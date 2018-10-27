@@ -1,0 +1,82 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    overflow-x: hidden
+}
+
+body {
+    font-family: sans-serif;
+    padding: 0 50px 50px;
+    background: linear-gradient(45deg,#3F51B5,#00BCD4) 50% no-repeat;
+    line-height: 1.4
+}
+
+.title {
+    margin-top: 50px;
+    font-size: 25px;
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 25px
+}
+
+.item {
+    margin: 10px;
+    background-color: #fff;
+    box-shadow: 0 15px 35px #3232321a, 0 5px 15px #0000001a;
+    transition: transform .3s;
+    transform: translate3d(0, -1px, 0)
+}
+
+.item:hover {
+    transform: translate3d(0, -10px, 0)
+}
+
+.item img {
+    display: block;
+    width: 100%;
+    height: auto
+}
+
+.item__body {
+    padding: 25px
+}
+
+.item__title {
+    font-size: 24px;
+    margin-bottom: 5px;
+    font-weight: 700;
+    color: #232323
+}
+
+.item__description {
+    color: #585858
+}
+
+/*
+* carousel
+*/
+.carousel,
+.items {
+    position: relative
+}
+
+.carousel {
+    margin-bottom: 30px
+}
+
+.carousel__container {
+    transition: transform .3s;
+    transform: translateZ(0)
+}
+
+.carousel__container:after {
+    content: "";
+    clear: both;
+    display: table
+}
+
+.carousel__item {
+    float: left
+}
