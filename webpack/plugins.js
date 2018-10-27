@@ -8,7 +8,7 @@ const _MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const devMode = process.env.NODE_ENV !== 'production'
 
 // the path(s) that should be cleaned
-const pathsToClean = ['dist']
+const pathsToClean = devMode ? [] : ['dist']
 
 // the clean options to use
 const cleanOptions = {

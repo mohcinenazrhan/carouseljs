@@ -9,7 +9,7 @@ const JSLoader = {
     use: {
         loader: 'babel-loader',
         options: {
-            presets: ['env']
+            presets: ['@babel/preset-env']
         }
     }
 };
@@ -20,7 +20,8 @@ const ESLintLoader = {
     use: {
         loader: 'eslint-loader',
         options: {
-            configFile: __dirname + '/.eslintrc'
+            configFile: __dirname + '/.eslintrc',
+            fix: true
         },
     }
 };
