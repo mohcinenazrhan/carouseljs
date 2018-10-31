@@ -14,7 +14,9 @@ export default class Carousel {
         this.options = Object.assign({}, {
             slidesToScroll: 1,
             slidesVisible: 1,
-            loop: false
+            loop: false,
+            navigation: true,
+            pagination: false
         }, options)
 
         this.moveCallBacks = []
@@ -38,7 +40,9 @@ export default class Carousel {
         });
 
         this.setStyle()
-        this.createNavigation()
+        if (this.options.navigation) this.createNavigation()
+        if (this.options.pagination) this.createPagination()
+
         this.moveCallBacks.forEach(cb => cb(this.currentItem))
 
         this.onWindowResize()
@@ -107,6 +111,31 @@ export default class Carousel {
 
     prev() {
         this.gotoItem(this.currentItem - this.slidesToScroll)
+    }
+
+    /**
+     * create Pagination
+     */
+    createPagination() {
+        let pagination = this.createDivWithClass('carousel__pagination')
+        let buttons = []
+
+        this.root.appendChild(pagination)
+
+        for (let i = 0; i < this.items.length; i = i + this.options.slidesToScroll) {
+            let button = this.createDivWithClass('carousel__pagination__button')
+            button.addEventListener('click', () => this.gotoItem(i))
+            pagination.appendChild(button)
+            buttons.push(button)
+        }
+
+        this.onMove(index => {
+            let activeButton = buttons[Math.floor(index / this.options.slidesToScroll)]
+            if (activeButton) {
+                buttons.forEach(button => button.classList.remove('carousel__pagination__button--active'))
+                activeButton.classList.add('carousel__pagination__button--active')
+            }
+        })
     }
 
     /**

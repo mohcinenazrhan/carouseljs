@@ -118,3 +118,35 @@ img {
     opacity: 0;
     display: none
 }
+
+.carousel__pagination {
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    display: none
+}
+
+.carousel__pagination__button {
+    background-color: #fff;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 3px;
+    box-shadow: 0 2px 5px #3232321a;
+    transition: transform .3s;
+    cursor: pointer
+}
+
+.carousel__pagination__button--active,
+.carousel__pagination__button:hover {
+    transform: scale(1.4)
+}
+
+@media screen and (min-width:800px) {
+    .carousel__pagination {
+        display: block
+    }
+}

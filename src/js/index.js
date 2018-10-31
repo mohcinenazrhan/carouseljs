@@ -1,11 +1,12 @@
 import Carousel from './Carousel';
 
-document.addEventListener('DOMContentLoaded', function () {
+const onReady = function () {
 
     new Carousel(document.querySelector('#carousel1'), {
         slidesToScroll: 3,
         slidesVisible: 3,
-        loop: false
+        loop: false,
+        pagination: true
     })
 
     new Carousel(document.querySelector('#carousel2'), {
@@ -15,8 +16,15 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 
     new Carousel(document.querySelector('#carousel3'))
+
     new Carousel(document.querySelector('#carousel4'), {
         slidesToScroll: 2,
         slidesVisible: 2
     })
-});
+}
+
+if (document.readyState !== "loading") {
+    onReady()
+}
+
+document.addEventListener('DOMContentLoaded', onReady);
