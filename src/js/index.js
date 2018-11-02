@@ -15,7 +15,9 @@ const onReady = function () {
         loop: true
     })
 
-    new Carousel(document.querySelector('#carousel3'))
+    new Carousel(document.querySelector('#carousel3'), {
+        infinite: true
+    })
 
     new Carousel(document.querySelector('#carousel4'), {
         slidesToScroll: 2,

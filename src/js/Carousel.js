@@ -4,11 +4,14 @@
 export default class Carousel {
 
     /**
- * @param {HTML element} element 
- * @param {Object} [options.slidesToScroll=1] : slidesToScroll Number of items to scroll
- * @param {Object} [options.slidesVisible=1] : slidesVisible number of elements visible in a slide
- * @param {boolean} [options.loop=false] : loop slider
- */
+     * @param {HTML element} element 
+     * @param {Object} [options.slidesToScroll=1] : slidesToScroll Number of items to scroll
+     * @param {Object} [options.slidesVisible=1] : slidesVisible number of elements visible in a slide
+     * @param {boolean} [options.loop=false] : loop slider
+     * @param {boolean} [options.pagination=false] : pagination slider
+     * @param {boolean} [options.navigation=true] : navigation slider
+     * @param {boolean} [options.infinite=false] : infinite loop
+     */
     constructor(element, options = {}) {
         this.element = element
         this.options = Object.assign({}, {
@@ -16,9 +19,15 @@ export default class Carousel {
             slidesVisible: 1,
             loop: false,
             navigation: true,
-            pagination: false
+            pagination: false,
+            infinite: false
         }, options)
 
+        if (this.options.loop && this.options.infinite) {
+            throw new Error("Un carousel ne peut etre à la fois en boucle et en infinie")
+        }
+
+        this.offset = 0
         this.moveCallBacks = []
         this.isMobile = false
 
@@ -39,6 +48,24 @@ export default class Carousel {
             return item
         });
 
+        if (this.options.infinite) {
+            //this.offset = this.options.slidesVisible * 2 //  - 1
+            this.offset = this.options.slidesVisible + this.options.slidesToScroll
+            if (this.offset > children.length)
+                console.error("Vous n'avez pas assez d'élément dans le carousel", element)
+
+            this.items = [
+                ...this.items.slice(this.items.length - this.offset).map(item => item.cloneNode(true)),
+                ...this.items,
+                ...this.items.slice(0, this.offset).map(item => item.cloneNode(true))
+            ]
+
+            this.currentItem = this.offset
+            this.gotoItem(this.offset)
+        }
+
+        this.items.forEach(item => this.container.appendChild(item))
+
         this.setStyle()
         if (this.options.navigation) this.createNavigation()
         if (this.options.pagination) this.createPagination()
@@ -53,6 +80,9 @@ export default class Carousel {
             else if (e.key === 'ArrowLeft' || e.key === 'Left') this.prev()
 
         })
+
+        if (this.options.infinite)
+            this.container.addEventListener('transitionend', this.resetInfinite.bind(this))
     }
 
     /**
@@ -102,7 +132,6 @@ export default class Carousel {
                 nextButton.classList.remove('carousel__next--hidden')
             }
         })
-
     }
 
     next() {
@@ -122,15 +151,16 @@ export default class Carousel {
 
         this.root.appendChild(pagination)
 
-        for (let i = 0; i < this.items.length; i = i + this.options.slidesToScroll) {
+        for (let i = 0; i < (this.items.length - 2 * this.offset); i = i + this.options.slidesToScroll) {
             let button = this.createDivWithClass('carousel__pagination__button')
-            button.addEventListener('click', () => this.gotoItem(i))
+            button.addEventListener('click', () => this.gotoItem(i + this.offset))
             pagination.appendChild(button)
             buttons.push(button)
         }
 
         this.onMove(index => {
-            let activeButton = buttons[Math.floor(index / this.options.slidesToScroll)]
+            let count = this.items.length - 2 * this.offset
+            let activeButton = buttons[Math.floor(((index - this.offset) % count) / this.options.slidesToScroll)]
             if (activeButton) {
                 buttons.forEach(button => button.classList.remove('carousel__pagination__button--active'))
                 activeButton.classList.add('carousel__pagination__button--active')
@@ -140,9 +170,10 @@ export default class Carousel {
 
     /**
      * Moves the carousel to the targeted item
-     * @param {number} index 
+     * @param {number} index
+     * @param {boolean} animation
      */
-    gotoItem(index = 0) {
+    gotoItem(index = 0, animation = true) {
 
         if (index < 0) {
             if (this.options.loop) index = this.items.length - this.slidesVisible
@@ -154,10 +185,31 @@ export default class Carousel {
         }
 
         let translateX = index * -100 / this.items.length
+
+        if (animation === false) this.container.style.transition = 'none'
         this.container.style.transform = "translate3d(" + translateX + "%, 0, 0)"
+        this.container.offsetHeight // force repaint
+        if (animation === false) this.container.style.transition = ''
+
         this.currentItem = index
 
         this.moveCallBacks.forEach(cb => cb(index))
+    }
+
+    /**
+     * Déplace le container pour donner l'impression d'un slide infini
+     */
+    /**
+     * 1 2 3 4 5 6 7
+     * 3 4 5 6 7 | 1 2 3 4 5 6 7 | 1 2 3 4 5
+     */
+    resetInfinite() {
+
+        if (this.currentItem <= this.options.slidesToScroll) {
+            this.gotoItem(this.currentItem + (this.items.length - 2 * this.offset), false)
+        } else if (this.currentItem >= this.items.length - this.offset) {
+            this.gotoItem(this.currentItem - (this.items.length - 2 * this.offset), false)
+        }
     }
 
     /**
