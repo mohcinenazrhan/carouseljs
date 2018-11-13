@@ -1,3 +1,5 @@
+import CarouselTouchPlugin from './CarouselTouchPlugin'
+
 /**
  * Class Carousel
  */
@@ -83,6 +85,8 @@ export default class Carousel {
 
         if (this.options.infinite)
             this.container.addEventListener('transitionend', this.resetInfinite.bind(this))
+
+        new CarouselTouchPlugin(this)
     }
 
     /**
@@ -197,7 +201,22 @@ export default class Carousel {
     }
 
     /**
-     * Déplace le container pour donner l'impression d'un slide infini
+     * @param {number} percent 
+     */
+    translate(percent) {
+        this.container.style.transform = "translate3d(" + percent + "%, 0, 0)"
+    }
+
+    disableTransition() {
+        this.container.style.transition = 'none'
+    }
+
+    enableTransition() {
+        this.container.style.transition = ''
+    }
+
+    /**
+     * Move the container to give the impression of an infinite slide
      */
     /**
      * 1 2 3 4 5 6 7
@@ -232,6 +251,20 @@ export default class Carousel {
      */
     get slidesVisible() {
         return this.isMobile ? 1 : this.options.slidesVisible
+    }
+    
+    /**
+     * @returns {number}
+     */
+    get containerWidth() {
+        return this.container.offsetWidth
+    }
+
+    /**
+     * @returns {number}
+     */
+    get carouselWidth() {
+        return this.root.offsetWidth
     }
 
     /**
