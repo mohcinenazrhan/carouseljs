@@ -168,7 +168,8 @@ export default class Carousel {
 
 		this.onMove((index) => {
 			let count = this.items.length - 2 * this.offset;
-			let activeButton = buttons[Math.floor(((index - this.offset) % count) / this.options.slidesToScroll)];
+			let activeButton = buttons[Math.round(((index - this.offset) % count) / this.options.slidesToScroll)];
+
 			if (activeButton) {
 				buttons.forEach((button) => button.classList.remove('carousel__pagination__button--active'));
 				activeButton.classList.add('carousel__pagination__button--active');
