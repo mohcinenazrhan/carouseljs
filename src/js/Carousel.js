@@ -181,15 +181,31 @@ export default class Carousel {
      * @param {boolean} animation
      */
 	gotoItem(index = 0, animation = true) {
+		// Adjuct the index, if next or prev slides are not enough
+		let cpt = 0;
+		if (index + this.slidesVisible > this.items.length && index > this.currentItem) {
+			for (let i = 1; i <= this.slidesVisible; i++) {
+				if (this.items[this.currentItem + this.slidesToScroll - 1 + i] === undefined) cpt++;
+			}
+
+			if (cpt < this.slidesToScroll) index = index - cpt;
+		} else if (index < 0 && index < this.currentItem) {
+			for (let i = this.slidesToScroll; i > 0; i--) {
+				if (this.items[this.currentItem - i] === undefined) cpt++;
+			}
+
+			if (cpt < this.slidesToScroll) index = index + cpt;
+		}
+
 		if (index < 0) {
 			if (this.options.loop) index = this.items.length - this.slidesVisible;
-			else return;
+			else index = this.currentItem;
 		} else if (
 			index >= this.items.length ||
 			(this.items[this.currentItem + this.slidesVisible] === undefined && index > this.currentItem)
 		) {
 			if (this.options.loop) index = 0;
-			else return;
+			else index = this.currentItem;
 		}
 
 		let translateX = index * -100 / this.items.length;
