@@ -210,10 +210,10 @@ export default class Carousel {
 
 		let translateX = index * -100 / this.items.length;
 
-		if (animation === false) this.container.style.transition = 'none';
-		this.container.style.transform = 'translate3d(' + translateX + '%, 0, 0)';
+		if (animation === false) this.disableTransition();
+		this.translate(translateX);
 		this.container.offsetHeight; // force repaint
-		if (animation === false) this.container.style.transition = '';
+		if (animation === false) this.enableTransition();
 
 		this.currentItem = index;
 
