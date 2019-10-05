@@ -35,6 +35,7 @@ export default class Carousel {
 		this.offset = 0;
 		this.moveCallBacks = [];
 		this.isMobile = false;
+		this.fromAction = false; // to reset Infinite only if the transition is from the action next/prev
 
 		let children = [].slice.call(element.children);
 		this.currentItem = 0;
@@ -218,6 +219,8 @@ export default class Carousel {
 		this.currentItem = index;
 
 		this.moveCallBacks.forEach((cb) => cb(index));
+
+		this.fromAction = true;
 	}
 
 	/**
@@ -243,11 +246,15 @@ export default class Carousel {
      * 3 4 5 6 7 | 1 2 3 4 5 6 7 | 1 2 3 4 5
      */
 	resetInfinite() {
+		if (!this.fromAction) return;
+
 		if (this.currentItem <= this.options.slidesToScroll) {
 			this.gotoItem(this.currentItem + (this.items.length - 2 * this.offset), false);
 		} else if (this.currentItem >= this.items.length - this.offset) {
 			this.gotoItem(this.currentItem - (this.items.length - 2 * this.offset), false);
 		}
+
+		this.fromAction = false;
 	}
 
 	/**
