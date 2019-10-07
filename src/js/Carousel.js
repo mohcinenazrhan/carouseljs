@@ -196,6 +196,8 @@ export default class Carousel {
      * @param {boolean} animation
      */
 	gotoItem(index = 0, animation = true) {
+		if (this.options.autoplay) this.stopAutoplay();
+
 		// Adjuct the index, if next or prev slides are not enough
 		let cpt = 0;
 		if (index + this.slidesVisible > this.items.length && index > this.currentItem) {
@@ -235,6 +237,7 @@ export default class Carousel {
 		this.moveCallBacks.forEach((cb) => cb(index));
 
 		this.fromAction = true;
+		if (this.options.autoplay) this.autoplay();
 	}
 
 	/**
