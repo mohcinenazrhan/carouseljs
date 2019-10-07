@@ -38,6 +38,7 @@ export default class Carousel {
 		this.moveCallBacks = [];
 		this.isMobile = false;
 		this.fromAction = false; // to reset Infinite only if the transition is from the action next/prev
+		this.intervalID = null;
 
 		let children = [].slice.call(element.children);
 		this.currentItem = 0;
@@ -92,7 +93,11 @@ export default class Carousel {
 
 		if (this.options.infinite) this.container.addEventListener('transitionend', this.resetInfinite.bind(this));
 
-		if (this.options.autoplay) this.autoplay(this.options.autoplayDelay);
+		if (this.options.autoplay) {
+			this.autoplay();
+			this.container.addEventListener('mouseover', this.stopAutoplay.bind(this));
+			this.container.addEventListener('mouseout', this.autoplay.bind(this));
+		}
 
 		new CarouselTouchPlugin(this);
 	}
@@ -320,9 +325,15 @@ export default class Carousel {
 
 	/**
 	 * auto play the carousel
-	 * @param {Number} autoplayDelay
 	 */
-	autoplay(autoplayDelay) {
-		setInterval(() => this.next(), autoplayDelay);
+	autoplay() {
+		this.intervalID = setInterval(() => this.next(), this.options.autoplayDelay);
+	}
+
+	/**
+	 * stop auto play
+	 */
+	stopAutoplay() {
+		if (this.intervalID !== null) clearTimeout(this.intervalID);
 	}
 }
