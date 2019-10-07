@@ -23,7 +23,9 @@ export default class Carousel {
 				loop: false,
 				navigation: true,
 				pagination: false,
-				infinite: false
+				infinite: false,
+				autoplay: false,
+				autoplayDelay: 2000
 			},
 			options
 		);
@@ -89,6 +91,8 @@ export default class Carousel {
 		});
 
 		if (this.options.infinite) this.container.addEventListener('transitionend', this.resetInfinite.bind(this));
+
+		if (this.options.autoplay) this.autoplay(this.options.autoplayDelay);
 
 		new CarouselTouchPlugin(this);
 	}
@@ -312,5 +316,13 @@ export default class Carousel {
 		if (this.options.pagination) this.createPagination();
 		this.setStyle();
 		this.moveCallBacks.forEach((cb) => cb(this.currentItem));
+	}
+
+	/**
+	 * auto play the carousel
+	 * @param {Number} autoplayDelay
+	 */
+	autoplay(autoplayDelay) {
+		setInterval(() => this.next(), autoplayDelay);
 	}
 }

@@ -25,7 +25,9 @@ const onReady = function() {
 	new Carousel(document.querySelector('#carousel2'), {
 		slidesToScroll: 2,
 		slidesVisible: 2,
-		loop: true
+		loop: true,
+		autoplay: true,
+		autoplayDelay: 2000
 	});
 
 	new Carousel(document.querySelector('#carousel3'), {
