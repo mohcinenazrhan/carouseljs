@@ -78,8 +78,10 @@ export default class Carousel {
 
 		this.moveCallBacks.forEach((cb) => cb(this.currentItem));
 
-		this.onWindowResize();
-		window.addEventListener('resize', this.onWindowResize.bind(this));
+		if (this.options.responsive) {
+			this.onWindowResize();
+			window.addEventListener('resize', this.onWindowResize.bind(this));
+		}
 
 		this.root.addEventListener('keyup', (e) => {
 			if (e.key === 'ArrowRight' || e.key === 'Right') this.next();
@@ -154,7 +156,9 @@ export default class Carousel {
      * create Pagination
      */
 	createPagination() {
-		let pagination = this.createDivWithClass('carousel__pagination');
+		let pagination =
+			this.root.querySelector('.carousel__pagination') || this.createDivWithClass('carousel__pagination');
+		pagination.innerHTML = '';
 		let buttons = [];
 
 		this.root.appendChild(pagination);
@@ -298,11 +302,15 @@ export default class Carousel {
      * Adapt carousel to winsow screen
      */
 	onWindowResize() {
-		let mobile = window.innerWidth < 800;
-		if (mobile !== this.isMobile) {
-			this.isMobile = mobile;
-			this.setStyle();
-			this.moveCallBacks.forEach((cb) => cb(this.currentItem));
+		for (const res in this.options.responsive) {
+			if (window.innerWidth >= res) {
+				this.options.slidesToScroll = this.options.responsive[res].slidesToScroll;
+				this.options.slidesVisible = this.options.responsive[res].slidesVisible;
+			}
 		}
+
+		if (this.options.pagination) this.createPagination();
+		this.setStyle();
+		this.moveCallBacks.forEach((cb) => cb(this.currentItem));
 	}
 }

@@ -1,152 +1,145 @@
 body,
 html {
-    margin: 0;
-    padding: 0;
-    min-height: 100%;
-    overflow-x: hidden
+	margin: 0;
+	padding: 0;
+	min-height: 100%;
+	overflow-x: hidden;
 }
 
 body {
-    font-family: sans-serif;
-    padding: 0 50px 50px;
-    background: linear-gradient(45deg,#3F51B5,#00BCD4) 50% no-repeat;
-    line-height: 1.4
+	font-family: sans-serif;
+	padding: 0 50px 50px;
+	background: linear-gradient(45deg, #3f51b5, #00bcd4) 50% no-repeat;
+	line-height: 1.4;
 }
 
 img {
-    max-width: 100%;
+	max-width: 100%;
 }
 
 .title {
-    margin-top: 50px;
-    font-size: 25px;
-    color: #fff;
-    font-weight: 700;
-    margin-bottom: 25px
+	margin-top: 50px;
+	font-size: 25px;
+	color: #fff;
+	font-weight: 700;
+	margin-bottom: 25px;
 }
 
 .item {
-    margin: 10px;
-    background-color: #fff;
-    box-shadow: 0 15px 35px #3232321a, 0 5px 15px #0000001a;
-    transition: transform .3s;
-    transform: translate3d(0, -1px, 0)
+	margin: 10px;
+	background-color: #fff;
+	box-shadow: 0 15px 35px #3232321a, 0 5px 15px #0000001a;
+	transition: transform .3s;
+	transform: translate3d(0, -1px, 0);
 }
 
 .item:hover {
-    transform: translate3d(0, -10px, 0)
+	transform: translate3d(0, -10px, 0);
 }
 
 .item img {
-    display: block;
-    width: 100%;
-    height: auto;
+	display: block;
+	width: 100%;
+	height: auto;
 }
 
 .item__body {
-    padding: 25px
+	padding: 25px;
 }
 
 .item__title {
-    font-size: 24px;
-    margin-bottom: 5px;
-    font-weight: 700;
-    color: #232323
+	font-size: 24px;
+	margin-bottom: 5px;
+	font-weight: 700;
+	color: #232323;
 }
 
 .item__description {
-    color: #585858
+	color: #585858;
 }
-
 
 /*
 * carousel
 */
 .carousel,
 .items {
-    position: relative
+	position: relative;
 }
 
 .carousel {
-    margin-bottom: 30px
+	margin-bottom: 30px;
 }
 
 .carousel__container {
-    transition: transform .3s;
-    transform: translateZ(0)
+	transition: transform .3s;
+	transform: translateZ(0);
 }
 
 .carousel__container:after {
-    content: "";
-    clear: both;
-    display: table
+	content: "";
+	clear: both;
+	display: table;
 }
 
 .carousel__item {
-    float: left
+	float: left;
 }
 
 .carousel__next,
 .carousel__prev {
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    background: #fff url('../imgs/4beb4317ebb605abb3096d9a1b5dbde4.svg') 50% no-repeat;
-    background-size: 20px 20px;
-    border-radius: 50%;
-    top: 50%;
-    margin-top: -20px;
-    right: -20px;
-    box-shadow: 0 15px 35px #3232321a, 0 5px 15px #0000001a;
-    cursor: pointer;
-    transition: transform .3s, opacity .3s
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	background: #fff url('../imgs/4beb4317ebb605abb3096d9a1b5dbde4.svg') 50% no-repeat;
+	background-size: 20px 20px;
+	border-radius: 50%;
+	top: 50%;
+	margin-top: -20px;
+	right: -20px;
+	box-shadow: 0 15px 35px #3232321a, 0 5px 15px #0000001a;
+	cursor: pointer;
+	transition: transform .3s, opacity .3s;
 }
 
 .carousel__prev {
-    background-image: url('../imgs/34e24e9b7204d9bc7367d0d520ca4157.svg');
-    right: auto;
-    left: -20px
+	background-image: url('../imgs/34e24e9b7204d9bc7367d0d520ca4157.svg');
+	right: auto;
+	left: -20px;
 }
 
 .carousel__next:hover,
 .carousel__prev:hover {
-    transform: scale(1.2)
+	transform: scale(1.2);
 }
 
 .carousel__next--hidden,
 .carousel__prev--hidden {
-    opacity: 0;
-    display: none
+	opacity: 0;
+	display: none;
 }
 
 .carousel__pagination {
-    position: absolute;
-    bottom: -20px;
-    left: 0;
-    right: 0;
-    text-align: center;
-    display: none
+	position: absolute;
+	bottom: -20px;
+	left: 0;
+	right: 0;
+	text-align: center;
+	display: block;
 }
 
 .carousel__pagination__button {
-    background-color: #fff;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    display: inline-block;
-    margin: 0 3px;
-    box-shadow: 0 2px 5px #3232321a;
-    transition: transform .3s;
-    cursor: pointer
+	background-color: #fff;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	display: inline-block;
+	margin: 0 3px;
+	box-shadow: 0 2px 5px #3232321a;
+	transition: transform .3s;
+	cursor: pointer;
 }
 
 .carousel__pagination__button--active,
 .carousel__pagination__button:hover {
-    transform: scale(1.4)
-}
-
-@media screen and (min-width:800px) {
-    .carousel__pagination {
-        display: block
-    }
+	transform: scale(1.4);
 }

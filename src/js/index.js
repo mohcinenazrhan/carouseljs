@@ -5,7 +5,21 @@ const onReady = function() {
 		slidesToScroll: 3,
 		slidesVisible: 3,
 		loop: false,
-		pagination: true
+		pagination: true,
+		responsive: {
+			0: {
+				slidesToScroll: 1,
+				slidesVisible: 1
+			},
+			600: {
+				slidesToScroll: 2,
+				slidesVisible: 2
+			},
+			1000: {
+				slidesToScroll: 3,
+				slidesVisible: 3
+			}
+		}
 	});
 
 	new Carousel(document.querySelector('#carousel2'), {
