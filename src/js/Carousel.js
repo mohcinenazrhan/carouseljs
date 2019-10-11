@@ -25,7 +25,7 @@ export default class Carousel {
 				pagination: false,
 				infinite: false,
 				autoplay: false,
-				autoplayDelay: 2000
+				autoplayTimeout: 2000
 			},
 			options
 		);
@@ -331,7 +331,7 @@ export default class Carousel {
 	 * auto play the carousel
 	 */
 	autoplay() {
-		this.intervalID = setInterval(() => this.next(), this.options.autoplayDelay);
+		this.intervalID = setInterval(() => this.next(), this.options.autoplayTimeout);
 	}
 
 	/**
