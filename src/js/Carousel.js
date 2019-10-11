@@ -5,13 +5,16 @@ import CarouselTouchPlugin from './CarouselTouchPlugin';
  */
 export default class Carousel {
 	/**
-	 * @param {HTML element} element 
-	 * @param {Object} [options.slidesToScroll=1] : slidesToScroll Number of items to scroll
-	 * @param {Object} [options.slidesVisible=1] : slidesVisible number of elements visible in a slide
+	 * @param {HTML element} element : element that will contain the carousel
+	 * @param {Object} options : options of the carousel characteristics and behavior
+	 * @param {number} [options.slidesToScroll=1] : slidesToScroll Number of items to scroll
+	 * @param {number} [options.slidesVisible=1] : slidesVisible number of elements visible in a slide
 	 * @param {boolean} [options.loop=false] : loop slider
 	 * @param {boolean} [options.pagination=false] : pagination slider
 	 * @param {boolean} [options.navigation=true] : navigation slider
 	 * @param {boolean} [options.infinite=false] : infinite loop
+	 * @param {boolean} [options.autoplay=false] : autoplay the carousel
+	 * @param {number} [options.autoplayTimeout=2000] : autoplay interval timeout
 	 */
 	constructor(element, options = {}) {
 		this.element = element;
