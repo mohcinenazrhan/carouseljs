@@ -5,14 +5,14 @@ import CarouselTouchPlugin from './CarouselTouchPlugin';
  */
 export default class Carousel {
 	/**
-     * @param {HTML element} element 
-     * @param {Object} [options.slidesToScroll=1] : slidesToScroll Number of items to scroll
-     * @param {Object} [options.slidesVisible=1] : slidesVisible number of elements visible in a slide
-     * @param {boolean} [options.loop=false] : loop slider
-     * @param {boolean} [options.pagination=false] : pagination slider
-     * @param {boolean} [options.navigation=true] : navigation slider
-     * @param {boolean} [options.infinite=false] : infinite loop
-     */
+	 * @param {HTML element} element 
+	 * @param {Object} [options.slidesToScroll=1] : slidesToScroll Number of items to scroll
+	 * @param {Object} [options.slidesVisible=1] : slidesVisible number of elements visible in a slide
+	 * @param {boolean} [options.loop=false] : loop slider
+	 * @param {boolean} [options.pagination=false] : pagination slider
+	 * @param {boolean} [options.navigation=true] : navigation slider
+	 * @param {boolean} [options.infinite=false] : infinite loop
+	 */
 	constructor(element, options = {}) {
 		this.element = element;
 		this.options = Object.assign(
@@ -58,7 +58,6 @@ export default class Carousel {
 		});
 
 		if (this.options.infinite) {
-			//this.offset = this.options.slidesVisible * 2 //  - 1
 			this.offset = this.options.slidesVisible + this.options.slidesToScroll;
 			if (this.offset > children.length)
 				console.error("Vous n'avez pas assez d'élément dans le carousel", element);
@@ -107,8 +106,8 @@ export default class Carousel {
 	}
 
 	/**
-     * Set style width to carousel container and items
-     */
+	 * Set style width to carousel container and items
+	 */
 	setStyle() {
 		let ratio = this.items.length / this.slidesVisible;
 		this.container.style.width = ratio * 100 + '%';
@@ -118,9 +117,9 @@ export default class Carousel {
 	}
 
 	/**
-     * @param {string} className
-     * @returns {HTMLElement} 
-     */
+	 * @param {string} className
+	 * @returns {HTMLElement} 
+	 */
 	createDivWithClass(className) {
 		let div = document.createElement('div');
 		div.setAttribute('class', className);
@@ -128,8 +127,8 @@ export default class Carousel {
 	}
 
 	/**
-     * Create navigation carousel Next and Prev
-     */
+	 * Create navigation carousel Next and Prev
+	 */
 	createNavigation() {
 		let nextButton = this.createDivWithClass('carousel__next');
 		let prevButton = this.createDivWithClass('carousel__prev');
@@ -166,8 +165,8 @@ export default class Carousel {
 	}
 
 	/**
-     * create Pagination
-     */
+	 * create Pagination
+	 */
 	createPagination() {
 		let pagination =
 			this.root.querySelector('.carousel__pagination') || this.createDivWithClass('carousel__pagination');
@@ -195,10 +194,10 @@ export default class Carousel {
 	}
 
 	/**
-     * Moves the carousel to the targeted item
-     * @param {number} index
-     * @param {boolean} animation
-     */
+	 * Moves the carousel to the targeted item
+	 * @param {number} index
+	 * @param {boolean} animation
+	 */
 	gotoItem(index = 0, animation = true) {
 		// Adjuct the index, if next or prev slides are not enough
 		let cpt = 0;
@@ -257,12 +256,8 @@ export default class Carousel {
 	}
 
 	/**
-     * Move the container to give the impression of an infinite slide
-     */
-	/**
-     * 1 2 3 4 5 6 7
-     * 3 4 5 6 7 | 1 2 3 4 5 6 7 | 1 2 3 4 5
-     */
+	 * Move the container to give the impression of an infinite slide
+	 */
 	resetInfinite() {
 		if (!this.fromAction) return;
 
@@ -276,44 +271,44 @@ export default class Carousel {
 	}
 
 	/**
-     * 
-     * @param {callback} callBack 
-     */
+	 * 
+	 * @param {callback} callBack 
+	 */
 	onMove(callBack) {
 		this.moveCallBacks.push(callBack);
 	}
 
 	/**
-     * @returns {number}
-     */
+	 * @returns {number}
+	 */
 	get slidesToScroll() {
 		return this.isMobile ? 1 : this.options.slidesToScroll;
 	}
 
 	/**
-     * @returns {number}
-     */
+	 * @returns {number}
+	 */
 	get slidesVisible() {
 		return this.isMobile ? 1 : this.options.slidesVisible;
 	}
 
 	/**
-     * @returns {number}
-     */
+	 * @returns {number}
+	 */
 	get containerWidth() {
 		return this.container.offsetWidth;
 	}
 
 	/**
-     * @returns {number}
-     */
+	 * @returns {number}
+	 */
 	get carouselWidth() {
 		return this.root.offsetWidth;
 	}
 
 	/**
-     * Adapt carousel to winsow screen
-     */
+	 * Adapt carousel to winsow screen
+	 */
 	onWindowResize() {
 		for (const res in this.options.responsive) {
 			if (window.innerWidth >= res) {
