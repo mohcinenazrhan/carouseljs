@@ -31,7 +31,7 @@ export default class Carousel {
 		);
 
 		if (this.options.loop && this.options.infinite) {
-			throw new Error('Un carousel ne peut etre à la fois en boucle et en infinie');
+			throw new Error('A carousel can not be both loop and infinite');
 		}
 
 		this.offset = 0;
@@ -59,8 +59,7 @@ export default class Carousel {
 
 		if (this.options.infinite) {
 			this.offset = this.options.slidesVisible + this.options.slidesToScroll;
-			if (this.offset > children.length)
-				console.error("Vous n'avez pas assez d'élément dans le carousel", element);
+			if (this.offset > children.length) console.error('You do not have enough element in the carousel', element);
 
 			this.items = [
 				...this.items.slice(this.items.length - this.offset).map((item) => item.cloneNode(true)),
