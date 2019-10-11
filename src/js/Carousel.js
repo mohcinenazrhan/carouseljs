@@ -97,6 +97,10 @@ export default class Carousel {
 			this.autoplay();
 			this.root.addEventListener('mouseover', this.stopAutoplay.bind(this));
 			this.root.addEventListener('mouseout', this.autoplay.bind(this));
+			// Active
+			window.addEventListener('focus', this.autoplay.bind(this));
+			// Inactive
+			window.addEventListener('blur', this.stopAutoplay.bind(this));
 		}
 
 		new CarouselTouchPlugin(this);
