@@ -8,7 +8,7 @@ A simple Javascript carousel with no library and dependencies, with swipe and re
 
 ## Motivation
 
-Prove that wa can create our own carousel libraries using native javascript with ES6, so we can get a minimal code and linimal weight.
+Prove that wa can create our own carousel libraries using native javascript with ES6, so we can get a high performance carousel with a minimal code.
 
 
 ## Getting Started
